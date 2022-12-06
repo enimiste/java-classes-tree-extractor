@@ -1,5 +1,6 @@
 package enimiste;
 
+import enimiste.printers.HtmlPrinter;
 import enimiste.printers.PrintStreamPrinter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,7 +25,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class Main {
-    final static File JARS_FOLDER_PATH = new File("C:\\Users\\user\\.m2\\repository\\ma\\iss-apps");
+    final static File JARS_FOLDER_PATH = new File("C:\\Users\\user\\.m2\\repository\\ma\\iss-apps\\ma-iss-core-framework\\grhm-2.18.13");
 
     public static void main(String[] args) {
         JarClassesTree tree = new JarClassesTree(0);
@@ -71,9 +73,22 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("End processing. Printing the Tree :");
+        System.out.println("End processing.");
+        System.out.println("Printing the Tree to the Console :");
         System.out.println("=".repeat(100));
-        tree.visit(new PrintStreamPrinter(System.out));
+        try (var printer = new PrintStreamPrinter(System.out, false)) {
+            //tree.visit(printer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String outputFile = "./tree_%d.html".formatted(System.currentTimeMillis());
+        System.out.println("Printing the Tree to HTML file at %s :".formatted(outputFile));
+        try (var printer = new HtmlPrinter(new FileOutputStream(outputFile), true)) {
+            tree.visit(printer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("=".repeat(100));
     }
 

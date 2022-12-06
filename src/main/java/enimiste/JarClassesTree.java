@@ -1,8 +1,9 @@
 package enimiste;
 
+import enimiste.printers.ClassTreePrinter;
+
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Consumer;
 
 public class JarClassesTree {
     private final int depth;
@@ -16,7 +17,7 @@ public class JarClassesTree {
         return nodes.isEmpty();
     }
 
-    public void visit(Consumer<HasInfo> visiteur) {
+    public void visit(ClassTreePrinter visiteur) {
         for (var node : nodes) node.visit(visiteur);
     }
 

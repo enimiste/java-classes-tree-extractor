@@ -6,4 +6,6 @@ public interface HasInfo {
     String getSimpleName();
 
     int getDepth();
+
+    boolean hasChilds();
 }

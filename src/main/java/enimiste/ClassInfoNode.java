@@ -1,9 +1,9 @@
 package enimiste;
 
+import enimiste.printers.ClassTreePrinter;
 import lombok.Getter;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 @Getter
 public class ClassInfoNode implements HasInfo {
@@ -30,10 +30,15 @@ public class ClassInfoNode implements HasInfo {
         childs.addAtRoot(className);
     }
 
-    public void visit(Consumer<HasInfo> visiteur) {
+    public void visit(ClassTreePrinter visiteur) {
         visiteur.accept(this);
         if (childs != null)
             childs.visit(visiteur);
+    }
+
+    @Override
+    public boolean hasChilds() {
+        return childs != null && !childs.isEmpty();
     }
 
     @Override
