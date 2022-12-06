@@ -1,9 +1,9 @@
 package enimiste;
 
 public interface HasInfo {
-    String getSimpleName();
+    String getFullName();
 
-    ClassInfoType getType();
+    String getSimpleName();
 
     int getDepth();
 }

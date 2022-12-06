@@ -21,7 +21,7 @@ public class JarClassesTree {
     }
 
     public void addAtRoot(String className) {
-        nodes.add(new ClassInfoNode(className, ClassInfoType.CLASS, depth));
+        nodes.add(new ClassInfoNode(className, depth));
     }
 
     public void addAt(String parentClassName, String className) {

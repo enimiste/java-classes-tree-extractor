@@ -7,15 +7,21 @@ import java.util.function.Consumer;
 
 @Getter
 public class ClassInfoNode implements HasInfo {
+    private final String fullName;
     private final String simpleName;
-    private final ClassInfoType type;
     private final int depth;
     private JarClassesTree childs;
 
-    public ClassInfoNode(String simpleName, ClassInfoType type, int depth) {
-        this.simpleName = simpleName;
-        this.type = type;
+    public ClassInfoNode(String fullName, int depth) {
+        this.fullName = Objects.requireNonNull(fullName);
         this.depth = depth;
+        {
+            String s1 = fullName.substring(fullName.lastIndexOf('.') + 1);
+            var i$ = s1.lastIndexOf('$');
+            if (i$ != -1)
+                this.simpleName = s1.substring(i$ + 1);
+            else this.simpleName = s1;
+        }
     }
 
     public void addAtRoot(String className) {
@@ -35,16 +41,16 @@ public class ClassInfoNode implements HasInfo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClassInfoNode classInfoNode = (ClassInfoNode) o;
-        return simpleName.equals(classInfoNode.simpleName);
+        return fullName.equals(classInfoNode.fullName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(simpleName);
+        return Objects.hash(fullName);
     }
 
     public ClassInfoNode findBy(String className) {
-        if (this.simpleName.equals(className)) return this;
+        if (this.fullName.equals(className)) return this;
         if (childs == null) return null;
         return childs.findBy(className);
     }

@@ -14,7 +14,7 @@ public class PrintStreamPrinter implements Consumer<HasInfo> {
 
     @Override
     public void accept(HasInfo hasInfo) {
-        out.println("%s%s(%s)".formatted(".".repeat(hasInfo.getDepth() * 5),
-                hasInfo.getSimpleName(), hasInfo.getType().name()));
+        out.println("%s%s (%s)".formatted(".".repeat(hasInfo.getDepth() * 5),
+                hasInfo.getSimpleName(), hasInfo.getFullName()));
     }
 }
