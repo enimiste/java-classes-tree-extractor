@@ -48,7 +48,7 @@ public class Main {
             }
             if (jarsUrl.length == 0) return;
 
-            System.out.println("Start processing %s jars : ".formatted(jarsUrl.length));
+            System.out.printf("Start processing %s jars : %n", jarsUrl.length);
             sb.forEach(System.out::println);
 
             try (URLClassLoader urlClassLoader = new URLClassLoader(jarsUrl)) {
