@@ -7,16 +7,31 @@ import java.io.PrintStream;
 public class PrintStreamPrinter implements ClassTreePrinter {
     private final PrintStream out;
     private final boolean closeStream;
+    private final boolean useOnlySimpleName;
 
-    public PrintStreamPrinter(PrintStream out, boolean closeStream) {
+    public PrintStreamPrinter(PrintStream out, boolean closeStream, boolean useOnlySimpleName) {
         this.out = out;
         this.closeStream = closeStream;
+        this.useOnlySimpleName = useOnlySimpleName;
     }
 
     @Override
     public void accept(HasInfo hasInfo) {
-        out.println("%s%s (%s)".formatted(".".repeat(hasInfo.getDepth() * 5),
-                hasInfo.getSimpleName(), hasInfo.getFullName()));
+        String simpleName = hasInfo.getSimpleName();
+        boolean ussn = useOnlySimpleName;
+        try {
+            Integer.parseInt(simpleName);
+            ussn = true;
+            simpleName = hasInfo.getFullName();
+        } catch (NumberFormatException e) {
+            //NOTHING
+        }
+        if (ussn)
+            out.printf("%s%s%n", ".".repeat(hasInfo.getDepth() * 5 + 2),
+                    simpleName);
+        else
+            out.printf("%s%s (%s)%n", ".".repeat(hasInfo.getDepth() * 5 + 2),
+                    simpleName, hasInfo.getFullName());
     }
 
     @Override

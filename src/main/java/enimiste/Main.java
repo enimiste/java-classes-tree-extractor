@@ -76,8 +76,8 @@ public class Main {
         System.out.println("End processing.");
         System.out.println("Printing the Tree to the Console :");
         System.out.println("=".repeat(100));
-        try (var printer = new PrintStreamPrinter(System.out, false)) {
-            //tree.visit(printer);
+        try (var printer = new PrintStreamPrinter(System.out, false, true)) {
+            tree.visit(printer);
         } catch (Exception e) {
             e.printStackTrace();
         }
