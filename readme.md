@@ -1,5 +1,21 @@
 # Jar Java classes Tree extractor
 
+## Libs :
+
+```xml
+
+<dependency>
+    <groupId>org.ow2.asm</groupId>
+    <artifactId>asm</artifactId>
+    <version>9.2</version>
+</dependency>
+<dependency>
+<groupId>org.ow2.asm</groupId>
+<artifactId>asm-util</artifactId>
+<version>8.0</version>
+</dependency>
+```
+
 ## Output :
 
 Using the `PrintStreamPrinter`.
